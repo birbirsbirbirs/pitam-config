@@ -1,0 +1,43 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: pitam-config-server
+          #          uri: ${HERO_ROUTE_URI:http://localhost:8081}
+          uri: lb://pitamconfigserver  # with eureka server
+          predicates:
+            - Path=/pitamconfigserver/**
+          filters:
+            - name: AddResponseHeader
+              args:
+                name: X-Powered-By
+                value: pitam
+        - id: hero-route
+          #          uri: ${HERO_ROUTE_URI:http://localhost:8081}
+          uri: lb://pitamherodemo  # with eureka server
+          predicates:
+            - Path=/hero/**
+          filters:
+            - PrefixPath=/api/v1
+            - name: AddResponseHeader
+              args:
+                name: X-Powered-By
+                value: pitam
+        - id: beer-route
+          #          uri: ${HERO_ROUTE_URI:http://localhost:8081}
+          uri: lb://pitambeerdemo  # with eureka server
+          predicates:
+            - Path=/beer/**
+          filters:
+            - PrefixPath=/api/v1
+            - name: AddResponseHeader
+              args:
+                name: X-Powered-By
+                value: pitam
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
