@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8085
 spring:
   config:
     import: optional:configserver:http:${PITAM_CONFIG_SERVER_URI:http://localhost:8888/pitamconfigserver}
