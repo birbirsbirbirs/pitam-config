@@ -4,16 +4,6 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: pitam-config-server
-          #          uri: ${HERO_ROUTE_URI:http://localhost:8081}
-          uri: lb://pitamconfigserver  # with eureka server
-          predicates:
-            - Path=/pitamconfigserver/**
-          filters:
-            - name: AddResponseHeader
-              args:
-                name: X-Powered-By
-                value: pitam
         - id: hero-route
           #          uri: ${HERO_ROUTE_URI:http://localhost:8081}
           uri: lb://pitamherodemo  # with eureka server
